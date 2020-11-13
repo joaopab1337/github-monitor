@@ -126,3 +126,8 @@ body {
     margin-right: 0;
   }
 }
+
+.filter-link:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}

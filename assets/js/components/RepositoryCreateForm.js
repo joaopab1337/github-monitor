@@ -1,46 +1,27 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {Field, reduxForm} from 'redux-form';
 
-const renderField = ({
-  input, placeholder, className, type, meta: {touched, error, invalid},
-}) => (
-    <div>
-      <input
-        {...input}
-        placeholder={placeholder}
-        className={`${className} ${touched && invalid ? 'is-invalid' : ''}`}
-        type={type}
-      />
-      {touched
-        && ((error && (
-          <div className="invalid-feedback">
-            {error}
-          </div>
-        )))
-      }
-    </div>
-  );
+import Alert from './Alert'
 
-renderField.propTypes = {
-  input: PropTypes.object.isRequired,
-  placeholder: PropTypes.string.isRequired,
-  className: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
-  meta: PropTypes.object.isRequired,
-};
+import { renderField } from './FormComponents';
 
 const RepoCreateForm = (props) => {
   const {
-    successMessage, handleSubmit, pristine, submitting,
+    createStatus, handleSubmit, pristine, submitting,
   } = props;
+
+  const [alert, toggleAlert] = useState(false)
+
+  useEffect(() => {
+    toggleAlert(true)
+  }, [createStatus])
+
   return (
     <div>
-      {successMessage
+      {createStatus.responseMessage && alert
         && (
-          <div className="alert alert-success" role="alert">
-            Repository added successfully!
-          </div>
+          <Alert successful={createStatus.success} message={createStatus.response.detail} onCloseHandler={() => toggleAlert(false)} />
         )}
       <form onSubmit={handleSubmit}>
         <div className="form-row">
@@ -68,7 +49,7 @@ RepoCreateForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   pristine: PropTypes.bool.isRequired,
   submitting: PropTypes.bool.isRequired,
-  successMessage: PropTypes.bool.isRequired,
+  createStatus: PropTypes.object.isRequired,
 };
 
 const validate = (values) => {

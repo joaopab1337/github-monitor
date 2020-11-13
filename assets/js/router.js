@@ -1,9 +1,9 @@
 import React from 'react';
 import {
-    Link, BrowserRouter as Router, Route, Switch,
+    Link, HashRouter as Router, Route, Switch,
 } from 'react-router-dom';
-import CommitListContainer from './containers/CommitListContainer';
-import RepoCreateContainer from './containers/RepoCreateContainer';
+import CommitsContainer from './containers/CommitsContainer';
+import RepositoriesContainer from './containers/RepositoriesContainer';
 
 export default (
     <Router>
@@ -16,14 +16,30 @@ export default (
                             Github Monitor
                         </Link>
                     </li>
+                    <li>
+                        <Link to="/commits">
+                            Commits
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/repositories">
+                            Repositories
+                        </Link>
+                    </li>
+                    <li>
+                        <a href="/logout">
+                            Log out
+                        </a>                            
+                    </li>
                 </ul>
             </div>
 
             <div id="page-content-wrapper">
                 <div className="container-fluid">
-                    <RepoCreateContainer />
                     <Switch>
-                        <Route path="/" exact component={CommitListContainer} />
+                        <Route path="/" exact component={CommitsContainer} />
+                        <Route path="/commits" exact component={CommitsContainer} />
+                        <Route path="/repositories" exact component={RepositoriesContainer} />
                     </Switch>
                 </div>
             </div>

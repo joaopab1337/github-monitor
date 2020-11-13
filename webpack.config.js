@@ -11,6 +11,11 @@ module.exports = {
     filename: '[name]-[hash].js',
   },
 
+  watch: true,
+  watchOptions: {
+    poll: true
+  },
+
   plugins: [
     new BundleTracker({ filename: './webpack-stats.json' }),
   ],

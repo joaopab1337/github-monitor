@@ -4,9 +4,14 @@ from .models import Commit, Repository
 
 
 class RepositorySerializer(serializers.ModelSerializer):
+    amount = serializers.SerializerMethodField()
+
+    def get_amount(self, obj):
+        return obj.amount
+
     class Meta:
         model = Repository
-        fields = ('name',)
+        fields = ('name', 'amount')
 
 
 class CommitSerializer(serializers.ModelSerializer):

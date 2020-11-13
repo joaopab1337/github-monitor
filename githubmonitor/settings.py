@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'webpack_loader',
     'common.apps.CommonConfig',
     'repositories.apps.RepositoriesConfig',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
@@ -136,6 +137,9 @@ STATICFILES_DIRS = (
 
 
 REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': (
+        'django_filters.rest_framework.DjangoFilterBackend',
+    ),
     'DEFAULT_RENDERER_CLASSES': (
         'rest_framework.renderers.JSONRenderer',
     ),
@@ -147,7 +151,7 @@ REST_FRAMEWORK = {
 }
 
 
-CELERY_ALWAYS_EAGER = config('CELERY_ALWAYS_EAGER', cast=bool, default=False)
+CELERY_ALWAYS_EAGER = config('CELERY_ALWAYS_EAGER', cast=bool, default=True)
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
